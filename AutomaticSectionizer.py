@@ -45,6 +45,7 @@ def lemmat(wor):
     return l
 
 df['lemma_token'] = df['clean_token'].apply(lemmat)
+df['lemma_text'] = df['lemma_token'].apply(lambda x: ' '.join(x))
 
 #stemming
 stemmer = PorterStemmer()
@@ -56,5 +57,17 @@ def stem(wor):
     return l
 
 df['stem_token'] = df['clean_token'].apply(stem)
+df['stem_text'] = df['stem_token'].apply(lambda x: ' '.join(x))
 
-print(df.head())
+
+# print(df.stem_text)
+
+# stem_df = df.stem_text.values.tolist()
+# print(stem_df)
+from sklearn.feature_extraction.text import CountVectorizer
+vectorizer = CountVectorizer()
+X = vectorizer.fit_transform(df.stem_text)
+#
+print(vectorizer.get_feature_names())
+
+print(X.toarray())
