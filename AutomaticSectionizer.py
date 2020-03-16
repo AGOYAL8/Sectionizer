@@ -71,3 +71,18 @@ X = vectorizer.fit_transform(df.stem_text)
 print(vectorizer.get_feature_names())
 
 print(X.toarray())
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+
+tfidf_vectorizer = TfidfVectorizer()
+values = tfidf_vectorizer.fit_transform(df.stem_text)
+
+# Show the Model as a pandas DataFrame
+feature_names = tfidf_vectorizer.get_feature_names()
+result = pd.DataFrame(values.toarray(), columns = feature_names)
+
+print(result)
+
+from sklearn.metrics.pairwise import cosine_similarity
+print(cosine_similarity(result, result))
