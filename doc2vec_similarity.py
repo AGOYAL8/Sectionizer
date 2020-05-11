@@ -66,27 +66,27 @@ def cosine(tokens, stem=False, lemma=False):
         sent1 = tokens[count]
         sent2 = tokens[count+1]
         print(count+1, count+2)
-        documents = [sent1 + ' ' + sent2]
-        # print(documents)
-        dictionary = corpora.Dictionary(documents)
-        corpus = [dictionary.doc2bow(text) for text in documents]
-        lsi = models.LsiModel(corpus, id2word=dictionary, num_topics=2)
-        index = similarities.MatrixSimilarity(lsi[corpus])
+        documents = [sent1, sent2]
+        # # print(documents)
+        # dictionary = corpora.Dictionary(documents)
+        # corpus = [dictionary.doc2bow(text) for text in documents]
+        # lsi = models.LsiModel(corpus, id2word=dictionary, num_topics=2)
+        # index = similarities.MatrixSimilarity(lsi[corpus])
+        # print(index)
+        # index.save('./data/tmp/deerwester.index')
+        # index = similarities.MatrixSimilarity.load('./data/tmp/deerwester.index')
 
-        index.save('./data/tmp/deerwester.index')
-        index = similarities.MatrixSimilarity.load('./data/tmp/deerwester.index')
-
-        sims = index[vec_lsi]  # perform a similarity query against the corpus
-        print(list(enumerate(sims)))  # print (document_number, document_similarity) 2-tuples
+        # sims = index[vec_lsi]  # perform a similarity query against the corpus
+        # print(list(enumerate(sims)))  # print (document_number, document_similarity) 2-tuples
 
         # # Create CBOW model
-        # model1 = gensim.models.Word2Vec(documents, min_count=1,
-        #                                 size=100, window=5)
-        # # Create Skip Gram model
-        # model2 = gensim.models.Word2Vec(documents, min_count=1, size=100,
-        #                                 window=5, sg=1)
-        # print(model1.n_similarity(sent1, sent2))
-        # print(model2.n_similarity(sent1, sent2))
+        model1 = gensim.models.Word2Vec(documents, min_count=1,
+                                        size=100, window=5)
+        # Create Skip Gram model
+        model2 = gensim.models.Word2Vec(documents, min_count=1, size=100,
+                                        window=5, sg=1)
+        print(model1.n_similarity(sent1, sent2))
+        print(model2.n_similarity(sent1, sent2))
 
         # labeled_questions = []
         # labeled_questions.append(TaggedDocument(sent1))

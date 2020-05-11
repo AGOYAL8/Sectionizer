@@ -27,7 +27,7 @@ def read_files(path):
     document = Document(path)
     doc = []
     for para in document.paragraphs:
-        if len(para.text) > 101:
+        if len(para.text) > 201:
             doc.append(para.text)
     df = pd.DataFrame(doc, columns=['sent'])
     return df
@@ -55,34 +55,55 @@ def preprocess(df, stem=False, lemma=False):
     return tokens
 
 
-def cosine(tokens):
-    softcosout = []
+def cosine(tokens, stem=False, lemma=False):
+    cosout_tfidf = []
+    cosout_cv = []
     colnames = []
+    df_cosine_cv = pd.DataFrame()
+    df_cosine_tfidf = pd.DataFrame()
+    df_cosine = pd.DataFrame()
 
-    df_softcos = pd.DataFrame()
     tokens = tokens.apply(lambda x: ' '.join(x))
     for count in range(0, len(tokens) - 1):
             sent1 = tokens[count]
             sent2 = tokens[count + 1]
-            cosine = {}
-            print(count + 1, count + 2)
-            # print(sent1)
-            # print('-----------------------------')
-            # print(sent2)
+            # print(count + 1, count + 2)
+            print(sent1)
+            print('-----------------------------')
+            print(sent2)
             documents = [sent1, sent2]
+            parag1 = 'parag#' + str(count + 1)
+            parag2 = ' & ' + str(count + 2)
+            paragnumber = parag1 + parag2
 
             print('count vectorize')
             count_vectorizer = CountVectorizer(stop_words='english', ngram_range=(1, 3))
             sparse_matrix = count_vectorizer.fit_transform(documents)
+            # print(cv)
             cv = cosine_similarity(sparse_matrix[0:1], sparse_matrix)
-            print(cosine_similarity(sparse_matrix[0:1], sparse_matrix))
-
+            print(cv)
+            cosout_cv.append(cv[0][1])
             print('tfidf')
             # tfidf_vectorizer = TfidfVectorizer(stop_words='english')
             tfidf_vectorizer = TfidfVectorizer(stop_words='english', ngram_range=(1, 3))
             tfidf_matrix = tfidf_vectorizer.fit_transform(documents)
             tfidf = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix)
-            print(cosine_similarity(tfidf_matrix[0:1], tfidf_matrix))
+            cosout_tfidf.append(tfidf[0][1])
+            print(tfidf)
+            colnames.append(paragnumber)
+    df_cosine = pd.DataFrame(list(zip(cosout_cv, cosout_tfidf)),
+                      columns=['cosout_cv', 'cosout_tfidf'])
+    print(df_cosine)
+    if stem:
+        df_cosine.to_csv(r'C:/Users/prash/OneDrive/Documents/Prashanti/DAEN 690/basiccosine_stem_report11.csv',
+                                     index=None, header=True)
+    if lemma:
+        df_cosine.to_csv(r'C:/Users/prash/OneDrive/Documents/Prashanti/DAEN 690/basiccosine_lemma_report11.csv',
+                                       index=None, header=True)
+
+    # print(df_cosine)
+
+
             # cosine.update(count + 1, count + 2, cv, tfidf)
         # cosine_df = pd.DataFrame(cosine_df)
     # print(cosine_df)
@@ -110,9 +131,9 @@ def cosine(tokens):
 
 
 def run(stem=False, lemma=False):
-    df_doc = read_files('./data/Report 1_Industry4.0.docx')
+    df_doc = read_files('./data/Report 11_Automotive.docx')
     tokens = preprocess(df_doc, stem=stem, lemma=lemma)
-    cosine(tokens)
+    cosine(tokens, stem=stem, lemma=lemma)
 
 
 def main():
