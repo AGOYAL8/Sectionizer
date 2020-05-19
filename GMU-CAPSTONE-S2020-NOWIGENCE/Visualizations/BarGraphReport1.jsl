@@ -1,0 +1,51 @@
+Graph Builder(
+	// set width of the graph
+	Size( 855, 540 ),
+	Variables(
+	// set the variables for the bar graphs
+		// Independent variables are the paragraph numbers
+		// Depedent variables are Stemming using fast Text soft cosine variables
+		// Second dependent variable is Lemmitizing using fast Text soft cosine variables
+		X( :Name( "Para/sent1" ) ),
+		Y( :Stem_fasttext_softcosine ),
+		Y( :lemme_fasttext_softcosine, Position( 1 ) )
+	),
+	Elements( Bar( X, Y( 1 ), Y( 2 ), Legend( 6 ) ) ), 
+	
+	SendToReport(
+	// set scale for the independent variable 
+		Dispatch(
+			{},
+			"Para/sent1",
+			ScaleBox,
+			{Min( 0 ), Max( 27.0417938931298 ), Inc( 1 ), Minor Ticks( 0 ), Label Row( Show Major Grid( 1 ) )}
+		),
+		Dispatch(
+		// set scale for the dependent variable 
+			{},
+			"Stem_fasttext_softcosine",
+			ScaleBox,
+			{Label Row( Show Major Grid( 1 ) )}
+		), 
+		// legend settings and color settings 
+		Dispatch(
+			{},
+			"400",
+			ScaleBox,
+			{Legend Model(
+				6,
+				Level Name( 0, "Stemming Fast-Text", Item ID( "Stem_fasttext_softcosine", 1 ) ),
+				Level Name( 1, "Lemmatizing Fast-Text", Item ID( "lemme_fasttext_softcosine", 1 ) ),
+				Properties( 0, {Fill Color( 3 )}, Item ID( "Stem_fasttext_softcosine", 1 ) ),
+				Properties( 1, {Fill Color( 20 )}, Item ID( "lemme_fasttext_softcosine", 1 ) )
+			)}
+		), 
+		// set the title of the graph
+		Dispatch( {}, "graph title", TextEditBox, {Set Text( "Soft Cosine using Fast-Text Word Embedding" )} ), 
+		// set the X and Y variable names 
+		Dispatch( {}, "X title", TextEditBox, {Set Text( "Paragraph Number" )} ),
+		Dispatch( {}, "Y title", TextEditBox, {Set Text( "Results of Stemming and Lemmatizing" )} ),
+		//set legend title
+		Dispatch( {}, "400", LegendBox, {Set Title( "Color Legend" )} )
+	)
+)

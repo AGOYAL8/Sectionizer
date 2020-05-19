@@ -1,0 +1,42 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Upload Docx file</title>-->
+<!--</head>-->
+<!--<body>-->
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>MODEL OUTPUT FOR YOUR UPLOADED FILE</h1>
+            <hr>
+            <p> NOTE: 
+                <b>The code removed the paragraphs less than 201 characters size. The order of the number assigned to the paragraph updates accordingly.</b>
+            </p>
+            <form action="/section_view" method="POST" enctype="multipart/form-data">
+                <div class ="form-group">                    
+                    <div>
+                        <p>------------TO VIEW DOCUMENT WITH DIVIDING POINTS CLICK THE BUTTON BELOW------------</p>
+                    </div>
+                    <button type="submit" class="btn btn-primary">SECTIONIZED VIEW</button>
+                </div>                
+            </form>
+            <form action="/download_output" method="POST" enctype="multipart/form-data">
+                <div class ="form-group">                    
+                    <div>
+                        <p>------------TO Download DOCUMENT Displayed, CLICK THE BUTTON BELOW------------</p>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Download CSV</button>
+                </div>                
+            </form>
+            {% for table in tables %}
+                    {{ table|safe }}   
+            {% endfor %} 
+        </div>
+    </div>
+</div>
+<!--</body>-->
+<!--</html>-->
+    
+    

@@ -1,0 +1,45 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Upload Docx file</title>-->
+<!--</head>-->
+<!--<body>-->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>SELECT MODEL FOR YOUR UPLOADED FILE</h1>
+            <hr>
+            <form action="/output" method="POST" enctype="multipart/form-data">
+                <div class ="form-group">                    
+                    <div>
+                    <label>Machine Learning Model:</label>
+                    <select id="Model" name="Model">
+                        <option value="model">Select Model</option>
+                        <option value="lasso">Lasso</option>
+                        <option value="ridge">Ridge</option>
+                        <option value="tree">Decision Tree</option>                            
+                        <option value="perceptron">Perceptron</option>
+                        <option value="logit">Logistic Regression</option>
+                        <option value="nBayes">Naive Bayes</option>
+                        <option value="forest">Random Forest</option>
+                    </select>
+                </div>
+                <button type="submit" onclick="javascript:checkModel();" class="btn btn-primary">Run Model</button>
+                </div>                
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function checkModel(){
+        if(document.getElementById('Model').value === 'model') {
+            alert("You need to select a model");
+            //This is to ensure that the form doesn't get submitted.
+            return false;
+        }
+    }
+</script>
+<!--</body>-->
+<!--</html>-->
+

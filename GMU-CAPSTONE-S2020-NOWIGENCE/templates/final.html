@@ -1,0 +1,26 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Upload Docx file</title>-->
+<!--</head>-->
+<!--<body>-->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form action="/download_section" method="POST" enctype="multipart/form-data">
+                <div class ="form-group">                    
+                    <div>
+                        <p>      ------------TO Download DOCUMENT Displayed, CLICK THE BUTTON BELOW------------      </p>
+                    </div>
+                </div>  
+                <button type="submit" class="btn btn-primary">Download CSV</button>              
+            </form>
+        </div>
+    </div>
+</div> 
+{% for table in tables %}
+{{ table|safe }}   
+{% endfor %}  
+<!--</body>-->
+<!--</html>-->

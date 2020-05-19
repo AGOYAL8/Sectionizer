@@ -1,0 +1,71 @@
+Graph Builder(
+// set width of the graph
+	Size( 715, 500 ),
+	Variables(
+	// set the variables for the line graphs
+		// Independent variables are the paragraph numbers
+		// Depedent variables are:
+		// lemma GlOVE SoftCosine
+		// Lemma FastText Soft Cosine
+		// Lemma TF-IDF Cosine
+		// Lemma CountVectorize Cosine
+		X( :Name( "Para/sent1" ) ),
+		Y( :stem_glove_softcosine ),
+		Y( :Stem_fasttext_softcosine, Position( 1 ) ),
+		Y( :stem_tfidf_cosine, Position( 1 ) ),
+		Y( :stem_cv_cosine, Position( 1 ) )
+	),
+	// set elements in the graph, X Variable, 4 Y variables, a legend 
+	Elements( Line( X, Y( 1 ), Y( 2 ), Y( 3 ), Y( 4 ), Legend( 29 ), Fill( "Fill Below" ) ) ),
+	SendToReport(
+	// set scale for the independent variable 
+		Dispatch(
+			{},
+			"Para/sent1",
+			ScaleBox,
+			{Min( 0 ), Max( 26.625 ), Inc( 1 ), Minor Ticks( 0 ), Label Row( Show Major Grid( 1 ) )}
+		),
+		// set scale for dependent variable
+		Dispatch( {}, "stem_glove_softcosine", ScaleBox, {Label Row( Show Major Grid( 1 ) )} ),
+		// legend settings and color settings 
+		Dispatch(
+			{},
+			"400",
+			ScaleBox,
+			{Legend Model(
+				29,
+				Level Name( 0, "Glove and Soft Cosine", Item ID( "stem_glove_softcosine", 1 ) ),
+				Level Name( 1, "FastText Soft Coseine", Item ID( "Stem_fasttext_softcosine", 1 ) ),
+				Level Name( 2, "TF-IDF Cosine", Item ID( "stem_tfidf_cosine", 1 ) ),
+				Level Name( 3, "Count Vectorize Cosine", Item ID( "stem_cv_cosine", 1 ) ),
+				Level Name( 4, "Glove and Soft Cosine", Item ID( "stem_glove_softcosine", 2 ) ),
+				Level Name( 5, "FastText Soft Cosine", Item ID( "Stem_fasttext_softcosine", 2 ) ),
+				Level Name( 6, "TF-IDF Cosine", Item ID( "stem_tfidf_cosine", 2 ) ),
+				Level Name( 7, "Count Vectorize Cosine", Item ID( "stem_cv_cosine", 2 ) ),
+				Base( 4, 0, 0, Item ID( "stem_glove_softcosine", 2 ) ),
+				Base( 5, 0, 0, Item ID( "Stem_fasttext_softcosine", 2 ) ),
+				Base( 6, 0, 0, Item ID( "stem_tfidf_cosine", 2 ) ),
+				Base( 7, 0, 0, Item ID( "stem_cv_cosine", 2 ) ),
+				Properties( 2, {Line Color( 36 )}, Item ID( "stem_tfidf_cosine", 1 ) ),
+				Base( -1, 0, 0, Item ID( "lemma_cv_cosine", 2 ) ),
+				Properties( -1, {Line Color( 19 )}, Item ID( "lemma_cv_cosine", 1 ) ),
+				Base( -1, 0, 0, Item ID( "lemma_tfidf_cosine", 2 ) ),
+				Properties( -1, {Line Color( 53 )}, Item ID( "lemma_tfidf_cosine", 1 ) ),
+				Base( -1, 0, 0, Item ID( "lemme_fasttext_softcosine", 2 ) )
+			)}
+		),
+		// set the title of the graph
+		Dispatch( {}, "graph title", TextEditBox, {Set Text( "Comparisons of All Methods Used - Stemming" )} ),
+		// set the X and Y variable names 
+		Dispatch( {}, "X title", TextEditBox, {Set Text( "Paragraph Number" )} ),
+		Dispatch( {}, "Y title", TextEditBox, {Set Text( "Results with Stemming" )} ),
+		// set legend title, and positions
+		Dispatch(
+			{},
+			"400",
+			LegendBox,
+			{Set Title( "Color Legend" ), Legend Position( {29, [0, 1, 2, 3, -1, -1, -1, -1]} ),
+			Position( {0, 1, 2, 3, -1, -1, -1, -1} )}
+		)
+	)
+)
